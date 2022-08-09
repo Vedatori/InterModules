@@ -1,7 +1,6 @@
 #pragma once
 #include <vector>
 #include <Arduino.h>
-#include "base64/base64.h"
 //format:
 /*
 TEMPO=180 tempo=180 useTempo=1
