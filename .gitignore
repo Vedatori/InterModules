@@ -40,3 +40,6 @@
 
 # Ignore .vscode
 .vscode
+
+# Ignore main.cpp as it is used for testing
+src/main.cpp
