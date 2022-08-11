@@ -5,10 +5,10 @@ void Weather::processCurrentWeather(String JSON){
 	deserializeJson(jsonDoc,JSON);
 	processCurrentWeather(jsonDoc.as<JsonObject>());
 }
-void Weather::processForecast(String JSON, String countryCode){
+void Weather::processForecast(String JSON){
 	StaticJsonDocument<WEATHER_MAX_JSON_SIZE> jsonDoc;
 	deserializeJson(jsonDoc,JSON);
-	processForecast(jsonDoc.as<JsonObject>(), countryCode);
+	processForecast(jsonDoc.as<JsonObject>());
 }
 
 
@@ -42,7 +42,7 @@ void Weather::processCurrentWeather(JsonObject JSON){
 	snow = JSON["snow"]["3h"];
 }
 
-void Weather::processForecast(JsonObject JSON, String countryCode){
+void Weather::processForecast(JsonObject JSON){
 	JsonArray tempJsonArray = JSON["list"].as<JsonArray>();
 	JsonObject tempList1stElement = tempJsonArray.getElement(0).as<JsonObject>();
 
@@ -59,20 +59,23 @@ void Weather::processForecast(JsonObject JSON, String countryCode){
 
 	clouds = tempList1stElement["clouds"]["all"];
 
-	positionLongitude = JSON["city"]["coord"]["lon"];
-	positionLatitude = JSON["city"]["coord"]["lat"];
 	weatherString = tempList1stElement["weather"].as<JsonArray>()[0].as<JsonObject>()["main"].as<const char*>();
 	weatherDescription = tempList1stElement["weather"].as<JsonArray>()[0].as<JsonObject>()["description"].as<const char*>();
 	timeOfCalculation = tempList1stElement["dt"];
+
+	rain = tempList1stElement["rain"]["3h"];
+	snow = tempList1stElement["snow"]["3h"];
+
+	positionLongitude = JSON["city"]["coord"]["lon"];
+	positionLatitude = JSON["city"]["coord"]["lat"];
 	timeZone = JSON["city"]["timezone"];
 	sunrise = JSON["city"]["sunrise"];
 	sunset = JSON["city"]["sunset"];
 	cityName = JSON["city"]["name"].as<const char*>();
 	cityId = JSON["city"]["id"];
-	this->countryCode = countryCode;
+	countryCode = JSON["city"]["country"].as<const char*>();
 
-	rain = tempList1stElement["rain"]["3h"];
-	snow = tempList1stElement["snow"]["3h"];
+	
 }
 
 void Weather::dump(Stream &stream){

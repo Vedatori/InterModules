@@ -3,25 +3,27 @@
 #include "weather.h"
 #include <Preferences.h>
 
-#define WEATHER_FORECAST_SIZE 40
+#define WEATHER_FORECAST_SIZE 8 //3h step for 1 day
 
 class WeatherApi {
 private:
 	String apiKey = "";
 	
 	Weather currentWeather;
-	Weather forecast[WEATHER_FORECAST_SIZE]; //3h step for 5 days
+	Weather forecast[WEATHER_FORECAST_SIZE]; 
 
 	Preferences preferences;
+
+	double positionLat = 0;
+	double positionLon = 0;
+	String positionName = "Not set";
 
 public:
 	void init();
 
 	void setKey(String key);
-	void saveKey(String key);
-	void saveKey();
 
-	
+	void setPosition(double latitude, double longitude, String name);
 
 	void updateWeather();
 	void updateForecast();
@@ -30,5 +32,14 @@ public:
 	Weather getWeather();
 	Weather getForecast(int index);
 
+	String getPositionDisplayName() {return positionName;}
+	double getPositionLatitude() {return positionLat;}
+	double getPositionLongitude() {return positionLon;}
 
+
+	bool geocodingByZipCode(String zipCode, String country, String &retName, double &retLat, double &retLon);
+	bool geocodingByName(String name, String &retName, double &retLat, double &retLon);
+
+	bool geocodingByZipCode(String zipCode, String country);
+	bool geocodingByName(String name);
 };

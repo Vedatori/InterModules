@@ -79,8 +79,8 @@ public:
 	void processCurrentWeather(String JSON);
 
 
-	void processForecast(JsonObject JSON, String countryCode);
-	void processForecast(String JSON, String countryCode);
+	void processForecast(JsonObject JSON);
+	void processForecast(String JSON);
 
 	void dump(Stream &stream);
 
