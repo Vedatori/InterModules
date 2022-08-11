@@ -43,3 +43,6 @@
 
 # Ignore main.cpp as it is used for testing
 src/main.cpp
+
+# Ignore MacOS .DS_Store
+.DS_Store
