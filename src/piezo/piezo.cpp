@@ -103,8 +103,8 @@ void Piezo::pMLoop(){
 	pDelay = 0;
 
 	String token = Melody::getThisToken(currentMelody.data, dataCounter);
-	Serial.print("Note: ");
-	Serial.println(token);
+	//Serial.print("Note: ");
+	//Serial.println(token);
 	if(token == ""){
 		return;
 	}
