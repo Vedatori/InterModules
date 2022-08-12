@@ -5,7 +5,6 @@
 
 
 
-#define WEATHER_MAX_JSON_SIZE 2048
 
 class Weather {
 private:
@@ -40,6 +39,8 @@ private:
 	float rain = 0;
 	float snow = 0;
 
+	uint16_t weatherCode = 0;
+
 public:
 	float getTemperature(){return temperature;}
 	float getTempFeelsLike(){return tempFeelsLike;}
@@ -72,15 +73,15 @@ public:
 	float getRain(){return rain;}
 	float getSnow(){return snow;}
 
+	uint16_t getWeatherCode(){return weatherCode;}
+
 
 
 
 	void processCurrentWeather(JsonObject JSON);
-	void processCurrentWeather(String JSON);
 
 
 	void processForecast(JsonObject JSON);
-	void processForecast(String JSON);
 
 	void dump(Stream &stream);
 

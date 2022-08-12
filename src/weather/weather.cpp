@@ -1,16 +1,5 @@
 #include "weather.h"
 
-void Weather::processCurrentWeather(String JSON){
-	StaticJsonDocument<WEATHER_MAX_JSON_SIZE> jsonDoc;
-	deserializeJson(jsonDoc,JSON);
-	processCurrentWeather(jsonDoc.as<JsonObject>());
-}
-void Weather::processForecast(String JSON){
-	StaticJsonDocument<WEATHER_MAX_JSON_SIZE> jsonDoc;
-	deserializeJson(jsonDoc,JSON);
-	processForecast(jsonDoc.as<JsonObject>());
-}
-
 
 void Weather::processCurrentWeather(JsonObject JSON){
 	temperature = JSON["main"]["temp"];
@@ -30,6 +19,7 @@ void Weather::processCurrentWeather(JsonObject JSON){
 	positionLatitude = JSON["coord"]["lat"];
 	weatherString = JSON["weather"].as<JsonArray>()[0].as<JsonObject>()["main"].as<const char*>();
 	weatherDescription = JSON["weather"].as<JsonArray>()[0].as<JsonObject>()["description"].as<const char*>();
+	weatherCode = JSON["weather"].as<JsonArray>()[0].as<JsonObject>()["id"];
 	timeOfCalculation = JSON["dt"];
 	timeZone = JSON["timezone"];
 	sunrise = JSON["sys"]["sunrise"];
@@ -62,6 +52,7 @@ void Weather::processForecast(JsonObject JSON){
 	weatherString = tempList1stElement["weather"].as<JsonArray>()[0].as<JsonObject>()["main"].as<const char*>();
 	weatherDescription = tempList1stElement["weather"].as<JsonArray>()[0].as<JsonObject>()["description"].as<const char*>();
 	timeOfCalculation = tempList1stElement["dt"];
+	weatherCode = tempList1stElement["weather"].as<JsonArray>()[0].as<JsonObject>()["id"];
 
 	rain = tempList1stElement["rain"]["3h"];
 	snow = tempList1stElement["snow"]["3h"];
@@ -101,4 +92,5 @@ void Weather::dump(Stream &stream){
 	stream.printf("countryCode: %s\n",countryCode);
 	stream.printf("rain: %f\n", rain);
 	stream.printf("snow: %f\n", snow);
+	stream.printf("weatherCode: %d\n", weatherCode);
 }

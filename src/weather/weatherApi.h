@@ -37,9 +37,7 @@ public:
 	double getPositionLongitude() {return positionLon;}
 
 
-	bool geocodingByZipCode(String zipCode, String country, String &retName, double &retLat, double &retLon);
 	bool geocodingByName(String name, String &retName, double &retLat, double &retLon);
 
-	bool geocodingByZipCode(String zipCode, String country);
 	bool geocodingByName(String name);
 };

@@ -48,7 +48,10 @@ void WeatherApi::updateWeather(){
 	if(code!=200){
 		return;
 	}
-	currentWeather.processCurrentWeather(data);
+
+	StaticJsonDocument<1024> jsonDoc;
+	deserializeJson(jsonDoc,data);
+	currentWeather.processCurrentWeather(jsonDoc.as<JsonObject>());
 }
 void WeatherApi::updateForecast(){
 	String data = "";
@@ -87,7 +90,7 @@ void WeatherApi::updateForecast(){
 
 
 
-	DynamicJsonDocument temp(WEATHER_FORECAST_SIZE*WEATHER_MAX_JSON_SIZE);
+	DynamicJsonDocument temp(WEATHER_FORECAST_SIZE*1024);
 	deserializeJson(temp, data);
 	int cnt = temp["cnt"].as<int>();
 
@@ -114,6 +117,9 @@ Weather WeatherApi::getWeather(){
 	return currentWeather;
 }
 Weather WeatherApi::getForecast(int index){
+	if(index >= WEATHER_FORECAST_SIZE){
+		index = 0;
+	}
 	return forecast[index];
 }
 
@@ -121,24 +127,6 @@ Weather WeatherApi::getForecast(int index){
 
 
 
-bool WeatherApi::geocodingByZipCode(String zipCode, String country, String &retName, double &retLat, double &retLon){
-	String data = "";
-	int code = makeHttpRequest("http://api.openweathermap.org/geo/1.0/zip?zip="+String(zipCode)+","+String(country)+"&appid="+String(apiKey), data);
-	if(code!=200){
-		return false;
-	}
-
-	StaticJsonDocument<512> temp;
-	deserializeJson(temp, data);
-
-	retName = temp["name"].as<const char*>();
-	retLat = temp["lat"];
-	retLon = temp["lon"];
-
-
-
-	return true;
-}
 bool WeatherApi::geocodingByName(String name, String &retName, double &retLat, double &retLon){
 	String data = "";
 	int code = makeHttpRequest("http://api.openweathermap.org/geo/1.0/direct?q="+String(name)+"&appid="+String(apiKey), data);
@@ -162,10 +150,6 @@ bool WeatherApi::geocodingByName(String name, String &retName, double &retLat, d
 	return true;
 }
 
-bool WeatherApi::geocodingByZipCode(String zipCode, String country){
-	return geocodingByZipCode(zipCode, country, positionName, positionLat, positionLon);
-	setPosition(positionLat, positionLon, positionName);
-}
 bool WeatherApi::geocodingByName(String name){
 	return geocodingByName(name, positionName, positionLat, positionLon);
 	setPosition(positionLat, positionLon, positionName);
