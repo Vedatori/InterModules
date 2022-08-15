@@ -1,6 +1,5 @@
 #include "weather.h"
 
-
 void Weather::processCurrentWeather(JsonObject JSON){
 	temperature = JSON["main"]["temp"];
 	tempFeelsLike = JSON["main"]["feels_like"];
@@ -81,15 +80,15 @@ void Weather::dump(Stream &stream){
 	stream.printf("clouds: %f\n",clouds);
 	stream.printf("positionLongitude: %f\n",positionLongitude);
 	stream.printf("positionLatitude: %f\n",positionLatitude);
-	stream.printf("weatherString: %s\n",weatherString);
-	stream.printf("weatherDescription: %s\n",weatherDescription);
+	stream.printf("weatherString: %s\n",weatherString.c_str());
+	stream.printf("weatherDescription: %s\n",weatherDescription.c_str());
 	stream.printf("timeOfCalculation: %u\n",timeOfCalculation);
 	stream.printf("timeZone: %u\n",timeZone);
 	stream.printf("sunrise: %u\n",sunrise);
 	stream.printf("sunset: %u\n",sunset);
-	stream.printf("cityName: %s\n",cityName);
+	stream.printf("cityName: %s\n",cityName.c_str());
 	stream.printf("cityId: %u\n",cityId);
-	stream.printf("countryCode: %s\n",countryCode);
+	stream.printf("countryCode: %s\n",countryCode.c_str());
 	stream.printf("rain: %f\n", rain);
 	stream.printf("snow: %f\n", snow);
 	stream.printf("weatherCode: %d\n", weatherCode);

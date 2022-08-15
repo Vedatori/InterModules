@@ -3,9 +3,6 @@
 #include <Arduino.h>
 #include <json/json.h>
 
-
-
-
 class Weather {
 private:
 	float temperature = 0;

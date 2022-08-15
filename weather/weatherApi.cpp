@@ -1,9 +1,7 @@
 #include "weatherApi.h"
 #include "json/json.h"
 
-
 // Temp befor wifi module is done
-#include <HTTPClient.h>
 int makeHttpRequest(String url, String &out) {
 	HTTPClient http;
 	http.begin(url);

@@ -1,7 +1,7 @@
 #pragma once
 #include <Arduino.h>
-#include "melody.h"
-#include "notes.h"
+
+#include "Melody.h"
 
 class Piezo {
 private:

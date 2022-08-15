@@ -1,7 +1,10 @@
 #pragma once
+
 #include <Arduino.h>
-#include "weather.h"
+#include <HTTPClient.h>
 #include <Preferences.h>
+
+#include "weather.h"
 
 #define WEATHER_FORECAST_SIZE 8 //3h step for 1 day
 
